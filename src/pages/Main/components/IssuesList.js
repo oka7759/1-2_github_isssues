@@ -1,15 +1,16 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import Badge from 'react-bootstrap/Badge';
-
+import { GlobalContext } from '../../../context/GlobalContext';
 import {
   BsChatDots,
   BsFillPersonFill,
   BsFillStopwatchFill,
 } from 'react-icons/bs';
 
-const IssuesList = ({ buckets }) => {
+const IssuesList = () => {
+  const { buckets } = useContext(GlobalContext);
   return (
     <ListContainer>
       {buckets.map((issue, idx) => {

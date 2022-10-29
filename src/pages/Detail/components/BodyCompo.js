@@ -1,10 +1,13 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import styled from 'styled-components';
+import { GlobalContext } from '../../../context/GlobalContext';
 
-const BodyCompo = ({ buckets }) => {
-  const { body } = buckets;
+const BodyCompo = () => {
+  const { commentBuckets } = useContext(GlobalContext);
+  const { body } = commentBuckets;
+
   return (
     <BodyBox>
       <ReactMarkdown children={body} remarkPlugins={[remarkGfm]} />
@@ -18,4 +21,5 @@ const BodyBox = styled.div`
   width: 100%;
   padding: 30px 10px;
   border-bottom: 1px solid #eee;
+  overflow-x: auto;
 `;

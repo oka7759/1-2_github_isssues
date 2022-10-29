@@ -1,13 +1,15 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
+import { GlobalContext } from '../../../context/GlobalContext';
 
-const FooterCompo = ({ comment }) => {
+const FooterCompo = () => {
+  const { comment } = useContext(GlobalContext);
   return (
     <FooterBox>
       {comment &&
-        comment.map((item, idx) => {
+        comment.map(item => {
           const { id, body, user, created_at } = item;
           return (
             <CommentItem key={id}>

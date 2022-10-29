@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
+import { GlobalContext } from '../../../context/GlobalContext';
 
-const HeaderCompo = ({ buckets }) => {
-  const { user, title, created_at, comments } = buckets;
-  console.log(buckets);
-
+const HeaderCompo = () => {
+  const { commentBuckets } = useContext(GlobalContext);
+  const { user, title, created_at, comments } = commentBuckets;
   const date = new Date(created_at);
   return (
     <HeaderBox>
