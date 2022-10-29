@@ -18,7 +18,7 @@ const FooterCompo = () => {
               </ItemAvartor>
               <CommentBubble>
                 <h3>
-                  {user.login} <span>{created_at}</span>
+                  {user.login} <span>{created_at.substr(0, 10)}</span>
                 </h3>
                 <p>
                   <ReactMarkdown children={body} remarkPlugins={[remarkGfm]} />

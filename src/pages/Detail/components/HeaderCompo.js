@@ -5,7 +5,7 @@ import { GlobalContext } from '../../../context/GlobalContext';
 const HeaderCompo = () => {
   const { commentBuckets } = useContext(GlobalContext);
   const { user, title, created_at, comments } = commentBuckets;
-  const date = new Date(created_at);
+
   return (
     <HeaderBox>
       <Avartor>
@@ -15,7 +15,7 @@ const HeaderCompo = () => {
         <h1>{title}</h1>
         <p>
           Writer: {user.login} Time:
-          {new Intl.DateTimeFormat('kr').format(date)}
+          {created_at.substr(0, 10)}
         </p>
       </TitleBox>
       <CommentBox>comment:{comments}</CommentBox>
