@@ -92,6 +92,5 @@ const CommentBubble = styled.div`
   }
   p {
     overflow-wrap: break-word;
-    overflow-x: auto;
   }
 `;

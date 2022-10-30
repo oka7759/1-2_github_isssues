@@ -32,6 +32,10 @@ const HeaderBox = styled.div`
   align-items: center;
   padding: 10px 0px;
   border-bottom: 1px solid #eee;
+  @media (max-width: 768px) {
+    flex-wrap: wrap;
+    flex-direction: column;
+  }
 `;
 const Avartor = styled.div`
   width: 100px;
@@ -46,10 +50,18 @@ const Avartor = styled.div`
 const TitleBox = styled.div`
   width: calc(100% - 250px);
   padding: 20px 20px;
+  @media (max-width: 768px) {
+    width: 100%;
+    text-align: center;
+  }
   h1 {
     font-size: 23px;
     font-weight: 500;
     line-height: 30px;
+    @media (max-width: 768px) {
+      font-size: 22px;
+      line-height: 24px;
+    }
   }
   p {
     font-size: 15px;

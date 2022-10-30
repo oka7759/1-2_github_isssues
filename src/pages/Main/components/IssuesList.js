@@ -92,10 +92,17 @@ const IssuesListBox = styled.div`
   width: 100%;
   border-bottom: 1px solid #eee;
   padding: 20px 0px 20px 20px;
+
   h1 {
     font-size: 17px;
     font-weight: 600;
     line-height: 20px;
+
+    @media (max-width: 768px) {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
   }
   :hover {
     background-color: #eeee;
