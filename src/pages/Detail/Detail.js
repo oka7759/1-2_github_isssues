@@ -8,16 +8,27 @@ import HeaderCompo from './components/HeaderCompo';
 import { GlobalContext } from '../../context/GlobalContext';
 
 const Detail = () => {
-  const { commentBuckets, setCommentBuckets, setComment } =
+  const { commentBuckets, setCommentBuckets, setComment, setError } =
     useContext(GlobalContext);
   const params = useParams();
+
   const fetchData = async () => {
-    await getIssuesDetail(params.id).then(({ data }) => {
-      setCommentBuckets(data);
-    });
-    await getComment(params.id).then(({ data }) => {
-      setComment(data);
-    });
+    await getIssuesDetail(params.id)
+      .then(({ data }) => {
+        setCommentBuckets(data);
+      })
+      .catch(e => {
+        setError(e.message);
+        navigator(`/error/${e.response.status}`);
+      });
+    await getComment(params.id)
+      .then(({ data }) => {
+        setComment(data);
+      })
+      .catch(e => {
+        setError(e.message);
+        navigator(`/error/${e.response.status}`);
+      });
   };
 
   useEffect(() => {

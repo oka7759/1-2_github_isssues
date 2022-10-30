@@ -1,11 +1,13 @@
 import React, { useCallback, useEffect, useContext } from 'react';
-
 import { getIssuesList } from '../../api/api';
 import IssuesList from './components/IssuesList';
 import { GlobalContext } from '../../context/GlobalContext';
+import { useNavigate } from 'react-router-dom';
 
 const Main = () => {
-  const { scroll, setScroll, buckets, setBuckets } = useContext(GlobalContext);
+  const { scroll, setScroll, buckets, setBuckets, setError } =
+    useContext(GlobalContext);
+  const navigator = useNavigate();
 
   window.addEventListener('scroll', () => {
     if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
@@ -25,7 +27,10 @@ const Main = () => {
         setBuckets([...buckets, ...data]);
       })
 
-      .catch(e => {});
+      .catch(e => {
+        setError(e.message);
+        navigator(`/error/${e.response.status}`);
+      });
   }, [scroll]);
 
   useEffect(() => {
