@@ -10,7 +10,11 @@ const BodyCompo = () => {
 
   return (
     <BodyBox>
-      <ReactMarkdown children={body} remarkPlugins={[remarkGfm]} />
+      <ReactMarkdown
+        className="markdown-body"
+        children={body}
+        remarkPlugins={[remarkGfm]}
+      />
     </BodyBox>
   );
 };
@@ -19,7 +23,7 @@ export default BodyCompo;
 
 const BodyBox = styled.div`
   width: 100%;
-  padding: 30px 10px;
+  padding: 30px 30px;
   border-bottom: 1px solid #eee;
   overflow-x: auto;
 `;

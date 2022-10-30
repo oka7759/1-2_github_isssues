@@ -6,6 +6,7 @@ import BodyCompo from './components/BodyCompo';
 import FooterCompo from './components/FooterCompo';
 import HeaderCompo from './components/HeaderCompo';
 import { GlobalContext } from '../../context/GlobalContext';
+import '../../styles/markdown.css';
 
 const Detail = () => {
   const { commentBuckets, setCommentBuckets, setComment, setError } =

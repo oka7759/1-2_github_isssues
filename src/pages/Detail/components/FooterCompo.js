@@ -21,7 +21,11 @@ const FooterCompo = () => {
                   {user.login} <span>{created_at.substr(0, 10)}</span>
                 </h3>
                 <p>
-                  <ReactMarkdown children={body} remarkPlugins={[remarkGfm]} />
+                  <ReactMarkdown
+                    className="markdown-body"
+                    children={body}
+                    remarkPlugins={[remarkGfm]}
+                  />
                 </p>
               </CommentBubble>
             </CommentItem>
