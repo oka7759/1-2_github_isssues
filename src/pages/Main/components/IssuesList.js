@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import Badge from 'react-bootstrap/Badge';
+import Spin from './Spin';
 import { GlobalContext } from '../../../context/GlobalContext';
 import {
   BsChatDots,
@@ -10,9 +11,9 @@ import {
 } from 'react-icons/bs';
 
 const IssuesList = () => {
-  const { buckets } = useContext(GlobalContext);
+  const { buckets, isLoding, last } = useContext(GlobalContext);
   return (
-    <ListContainer>
+    <IssuesListLayout>
       {buckets.map((issue, idx) => {
         const { title, user, updated_at, id, comments, number } = issue;
 
@@ -28,14 +29,14 @@ const IssuesList = () => {
               </a>
             </WantedAD>
             <Link to={`/detail/${number}`}>
-              <ListItem>
+              <IssuesListBox>
                 <h1>
                   <Badge bg="secondary">#{number}</Badge> Title: {title}
                 </h1>
 
                 <UserBox>
                   <Writer>
-                    <BsFillPersonFill />{' '}
+                    <BsFillPersonFill />
                     <Badge bg="primary">{user.login}</Badge>
                   </Writer>
                   <Date>
@@ -47,12 +48,12 @@ const IssuesList = () => {
                     <Badge bg="success">{comments}</Badge>
                   </Comment>
                 </UserBox>
-              </ListItem>
+              </IssuesListBox>
             </Link>
           </React.Fragment>
         ) : (
           <Link to={`/detail/${number}`}>
-            <ListItem key={id}>
+            <IssuesListBox key={id}>
               <h1>
                 <Badge bg="secondary">#{number}</Badge> Title: {title}
               </h1>
@@ -70,23 +71,24 @@ const IssuesList = () => {
                   <Badge bg="success">{comments}</Badge>
                 </Comment>
               </UserBox>
-            </ListItem>
+            </IssuesListBox>
           </Link>
         );
       })}
-    </ListContainer>
+      {isLoding && !last && <Spin />}
+    </IssuesListLayout>
   );
 };
 
 export default IssuesList;
 
-const ListContainer = styled.div`
+const IssuesListLayout = styled.div`
   width: 100%;
   height: auto;
   min-height: 500px;
   background-color: white;
 `;
-const ListItem = styled.div`
+const IssuesListBox = styled.div`
   width: 100%;
   border-bottom: 1px solid #eee;
   padding: 20px 0px 20px 20px;

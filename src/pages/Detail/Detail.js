@@ -21,6 +21,7 @@ const Detail = () => {
         setError(e.message);
         navigator(`/error/${e.response.status}`);
       });
+
     await getComment(params.id)
       .then(({ data }) => {
         setComment(data);

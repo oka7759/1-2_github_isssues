@@ -5,8 +5,16 @@ import { GlobalContext } from '../../context/GlobalContext';
 import { useNavigate } from 'react-router-dom';
 
 const Main = () => {
-  const { scroll, setScroll, buckets, setBuckets, setError } =
-    useContext(GlobalContext);
+  const {
+    last,
+    setLast,
+    scroll,
+    setScroll,
+    buckets,
+    setBuckets,
+    setError,
+    setIsLoding,
+  } = useContext(GlobalContext);
   const navigator = useNavigate();
 
   window.addEventListener('scroll', () => {
@@ -21,10 +29,13 @@ const Main = () => {
       per_page: 20,
       page: scroll,
     };
+    setIsLoding(true);
 
     await getIssuesList(payload)
       .then(({ data }) => {
-        setBuckets([...buckets, ...data]);
+        data.length === 0 && setLast(true);
+        setIsLoding(false);
+        !last && setBuckets([...buckets, ...data]);
       })
 
       .catch(e => {
@@ -34,7 +45,7 @@ const Main = () => {
   }, [scroll]);
 
   useEffect(() => {
-    fetchData();
+    !last && fetchData();
   }, [scroll]);
 
   return <IssuesList />;

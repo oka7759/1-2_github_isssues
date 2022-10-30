@@ -15,12 +15,18 @@ const Router = () => {
   const [commentBuckets, setCommentBuckets] = useState();
   const [comment, setComment] = useState([]);
   const [error, setError] = useState('');
+  const [isLoding, setIsLoding] = useState(false);
+  const [last, setLast] = useState(false);
   return (
     <BrowserRouter>
       <Container>
         <Header />
         <GlobalContext.Provider
           value={{
+            last,
+            setLast,
+            isLoding,
+            setIsLoding,
             scroll,
             setScroll,
             buckets,
