@@ -1,15 +1,17 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
-import { GlobalContext } from '../../../context/GlobalContext';
+import { useSelector } from 'react-redux';
 
 const FooterCompo = () => {
-  const { comment } = useContext(GlobalContext);
+  const comment = useSelector(state => state.comments.value);
+  console.log(comment);
+
   return (
     <FooterBox>
-      {comment &&
-        comment.map(item => {
+      {comment[0] &&
+        comment[0].map(item => {
           const { id, body, user, created_at } = item;
           return (
             <CommentItem key={id}>

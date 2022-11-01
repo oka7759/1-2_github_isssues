@@ -1,10 +1,11 @@
 import React, { useContext } from 'react';
+import { useSelector } from 'react-redux';
 import styled from 'styled-components';
-import { GlobalContext } from '../../../context/GlobalContext';
 
 const HeaderCompo = () => {
-  const { commentBuckets } = useContext(GlobalContext);
-  const { user, title, created_at, comments } = commentBuckets;
+  const commentBuckets = useSelector(state => state.commnetBuckets.value);
+
+  const { user, title, created_at, comments } = commentBuckets[0];
 
   return (
     <HeaderBox>

@@ -2,17 +2,17 @@ import React, { useContext } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import Button from 'react-bootstrap/Button';
-import { GlobalContext } from '../../context/GlobalContext';
+import { useSelector } from 'react-redux';
 
 const ErrorsPage = () => {
-  const { error } = useContext(GlobalContext);
   const params = useParams();
+  const errorMessage = useSelector(state => state.error.value);
 
   return (
     <ErrorsPageBox>
       <img src="/images/error.png" alt="error" />
       <ErrorH1>{params.id} 에러입니다.</ErrorH1>
-      <ErrorP>{error}</ErrorP>
+      <ErrorP>{errorMessage}</ErrorP>
       <Link to="/">
         <Button variant="primary" size="lg" className="mt-3">
           돌아가기
