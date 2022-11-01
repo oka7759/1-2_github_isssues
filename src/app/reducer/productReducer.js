@@ -70,9 +70,13 @@ export const commentBuckets = createSlice({
     getCommentBuckets: (state, action) => {
       state.value = [action.payload];
     },
+    removeCommentBuckets: state => {
+      state.value = [];
+    },
   },
 });
-export const { getCommentBuckets } = commentBuckets.actions;
+export const { getCommentBuckets, removeCommentBuckets } =
+  commentBuckets.actions;
 export const commentBucketsReducer = commentBuckets.reducer;
 
 export const comments = createSlice({

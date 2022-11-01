@@ -10,6 +10,7 @@ import {
   isScroll,
   nowLoading,
   getBuckets,
+  removeCommentBuckets,
 } from '../../app/reducer/productReducer';
 
 const Main = () => {
@@ -30,7 +31,7 @@ const Main = () => {
       per_page: 20,
       page: scroll,
     };
-
+    dispatch(removeCommentBuckets());
     dispatch(complet());
 
     await getIssuesList(payload)
