@@ -1,25 +1,26 @@
 import React, { useCallback, useEffect, useContext } from 'react';
 import { getIssuesList } from '../../api/api';
 import IssuesList from './components/IssuesList';
-import { GlobalContext } from '../../context/GlobalContext';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  complet,
+  errorMessage,
+  isLast,
+  isScroll,
+  nowLoading,
+  getBuckets,
+} from '../../app/reducer/productReducer';
 
 const Main = () => {
-  const {
-    last,
-    setLast,
-    scroll,
-    setScroll,
-    buckets,
-    setBuckets,
-    setError,
-    setIsLoding,
-  } = useContext(GlobalContext);
   const navigator = useNavigate();
+  const dispatch = useDispatch();
+  const last = useSelector(state => state.last.value);
+  const scroll = useSelector(state => state.scroll.value);
 
   window.addEventListener('scroll', () => {
     if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
-      setScroll(scroll + 1);
+      dispatch(isScroll());
     }
   });
 
@@ -29,17 +30,18 @@ const Main = () => {
       per_page: 20,
       page: scroll,
     };
-    setIsLoding(true);
+
+    dispatch(complet());
 
     await getIssuesList(payload)
       .then(({ data }) => {
-        data.length === 0 && setLast(true);
-        setIsLoding(false);
-        !last && setBuckets([...buckets, ...data]);
+        data.length === 0 && dispatch(isLast());
+        dispatch(nowLoading());
+        !last && dispatch(getBuckets(data));
       })
 
       .catch(e => {
-        setError(e.message);
+        dispatch(errorMessage(e.message));
         navigator(`/error/${e.response.status}`);
       });
   }, [scroll]);

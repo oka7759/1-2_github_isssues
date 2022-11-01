@@ -1,12 +1,13 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import ReactMarkdown from 'react-markdown';
+import { useSelector } from 'react-redux';
 import remarkGfm from 'remark-gfm';
 import styled from 'styled-components';
-import { GlobalContext } from '../../../context/GlobalContext';
 
 const BodyCompo = () => {
-  const { commentBuckets } = useContext(GlobalContext);
-  const { body } = commentBuckets;
+  const commentBuckets = useSelector(state => state.commnetBuckets.value);
+
+  const { body } = commentBuckets[0];
 
   return (
     <BodyBox>

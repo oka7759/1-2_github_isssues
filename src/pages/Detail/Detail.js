@@ -1,34 +1,43 @@
-import React, { useEffect, useContext } from 'react';
+import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
-import { getIssuesDetail, getComment } from '../../api/api';
+import Spin from '../../components/Spin';
 import BodyCompo from './components/BodyCompo';
 import FooterCompo from './components/FooterCompo';
 import HeaderCompo from './components/HeaderCompo';
-import { GlobalContext } from '../../context/GlobalContext';
+import { getIssuesDetail, getComment } from '../../api/api';
+import {
+  errorMessage,
+  getCommentBuckets,
+  getComments,
+  complet,
+  nowLoading,
+} from '../../app/reducer/productReducer';
 import '../../styles/markdown.css';
 
 const Detail = () => {
-  const { commentBuckets, setCommentBuckets, setComment, setError } =
-    useContext(GlobalContext);
   const params = useParams();
-
+  const dispatch = useDispatch();
+  const loading = useSelector(state => state.loading.value);
   const fetchData = async () => {
+    dispatch(complet());
     await getIssuesDetail(params.id)
       .then(({ data }) => {
-        setCommentBuckets(data);
+        dispatch(nowLoading());
+        dispatch(getCommentBuckets(data));
       })
       .catch(e => {
-        setError(e.message);
+        dispatch(errorMessage(e.message));
         navigator(`/error/${e.response.status}`);
       });
 
     await getComment(params.id)
       .then(({ data }) => {
-        setComment(data);
+        dispatch(getComments(data));
       })
       .catch(e => {
-        setError(e.message);
+        dispatch(errorMessage(e.message));
         navigator(`/error/${e.response.status}`);
       });
   };
@@ -36,14 +45,15 @@ const Detail = () => {
   useEffect(() => {
     fetchData();
   }, []);
-  return (
-    commentBuckets && (
-      <DetailContainer>
-        <HeaderCompo />
-        <BodyCompo />
-        <FooterCompo />
-      </DetailContainer>
-    )
+
+  return loading ? (
+    <DetailContainer>
+      <HeaderCompo />
+      <BodyCompo />
+      <FooterCompo />
+    </DetailContainer>
+  ) : (
+    <Spin />
   );
 };
 
